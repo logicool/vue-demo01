@@ -5,7 +5,7 @@
  * 
  */
 
-let baseUrl = ''; 
+let baseUrl = 'https://www.easy-mock.com/mock/5a9508669b817962797a3dbb/VD'; 
 let routerMode = 'history'; // hash
 
 export {
