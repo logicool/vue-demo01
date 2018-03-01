@@ -54,6 +54,9 @@ export default {
     let sys = getBowerInfo;
     //sys.browser得到浏览器的类型，sys.ver得到浏览器的版本
     this.bowerInfo = sys;
+  },
+  mounted() {
+    // console.log(this.$router);
   }
 }
 

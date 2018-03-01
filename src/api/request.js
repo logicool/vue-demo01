@@ -3,6 +3,7 @@ import store from '../store'
 import router from '../router'
 import { baseUrl } from '@/config/env.js'
 import * as Logger from '@/core/logger.js'
+import Vue from 'vue'
 
 /**
  * 网络请求设置
@@ -61,7 +62,7 @@ instance.interceptors.response.use(function (response) {
         alert('请重新登录');
         router.replace({
           path: '/page404',
-          query: {redirect: router.currentRoute.fullPath}
+          // query: {redirect: router.currentRoute.fullPath}
         })
 
       }
