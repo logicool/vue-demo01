@@ -2,12 +2,13 @@
 
 > A Vue.js project
 
-练习用vue工程
-vue2 + vue-router + vuex
+练习用vue全家桶工程
+vue2 + vue-router + vuex 
 
 > 组件
 axios 网络请求
 fastclick 连续点击
+elementUI 饿了么UI库
 webpack require.ensure 按需加载js
 
 ## Build Setup

@@ -1,15 +1,14 @@
 <template>
   <div class="test">
-    <h1>{{ msg }}</h1>
-    <canvas id="test-canvas" width="300" height="200">
-      
-    </canvas>
-  </div>
+    <div id="content">我是内容<br />我也是内容</div>
+        <div id="actor">我是演员</div>
+    </div>
 </template>
 
 <script>
 export default {
   name: 'test',
+  props: ['token'],
   data () {
     return {
       msg: 'Welcome to test'
@@ -23,4 +22,8 @@ export default {
 h1, h2 {
   font-weight: normal;
 }
+.test { height: 400px; background: #c00;}
+#content, #actor { display: inline-block; vertical-align: middle;}
+#content { font-size: 12px; color: #fff;}
+#actor {height: 400px; font-size: 0;}
 </style>

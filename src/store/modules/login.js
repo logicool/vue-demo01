@@ -1,4 +1,4 @@
-import request from '@/api/request.js';
+import { request } from '@/api/request.js';
 import { DO_LOGIN } from '../mutation-types.js'
 const state = {
     status: '',
@@ -15,9 +15,10 @@ const getters = {}
 
 const mutations = {
   [DO_LOGIN](state, res) {
-    if (res.data && res.data.success && res.data.data) {
+    console.log(res);
+    if (res && res.success && res.data) {
       //state = {...state, ...res.data.data}
-      let rs = res.data.data;
+      let rs = res.data;
       state.status = rs.status;
       state.email = rs.email;
       state.auth_type = rs.auth_type;
@@ -32,13 +33,11 @@ const mutations = {
 
 const actions = {
     doLogin({commit}) {
-      request({
-        method:'post',
-        url:"/login"
-      }).then(response=>{
-        console.log('dologin')
-        commit(DO_LOGIN, response)
-      })
+      request().post("/login").then(
+        data=> {
+          commit(DO_LOGIN, data)
+        }
+      )
     }
 }
 
