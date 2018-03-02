@@ -1,59 +1,77 @@
 <template>
-  <div class="login">
-    <h1>{{ msg }}</h1>
-    <h2>{{ test }}</h2>
-    <p>
-      语言版本: {{bowerInfo.language}}
-    </p>
-    <p>
-      是否为移动终端: {{bowerInfo.versions.mobile}}
-    </p>
-    <p>
-      ios终端: {{bowerInfo.versions.ios}}
-    </p>
-    <p>
-      android终端: {{bowerInfo.versions.android}}
-    </p>
-    <p>
-      是否为iPhone: {{bowerInfo.versions.iPhone}}
-    </p>
-    <p>
-      是否iPad: {{bowerInfo.versions.iPad}}
-    </p>
-    <div class="main">
-      <p>userRoles: {{ userRoles }}</p>
-      <button @click="login"> Login </button>
-      <router-link v-if="test.token" :to="{ name: '测试页', params: { token: test.token }}" replace>go next</router-link>
-    </div>
-  </div>
+  <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px" class="loginForm login-container">
+    <h3 class="title">系统登录</h3>
+    <el-form-item prop="account">
+      <el-input type="text" v-model="loginForm.account" auto-complete="off" placeholder="账号"></el-input>
+    </el-form-item>
+    <el-form-item prop="password">
+      <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
+    </el-form-item>
+    <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
+    <el-form-item style="width:100%;">
+      <el-button type="primary" style="width:100%;" @click.native.prevent="login" v-loading.fullscreen.lock="logining">登录</el-button>
+    </el-form-item>
+
+  </el-form>
+
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex';
-import { getBowerInfo } from '@/core/utils';
 export default {
   name: 'login',
   data () {
     return {
-      msg: 'Welcome to login',
-      test: this.$store.state.login,
-      userRoles: this.$store.getters.userRoles,
-      bowerInfo: {},
+      loginForm: {
+        account: '',
+        password: '',
+      },
+      rules: {
+        account: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+        ]
+      },
+      checked: true,
+      logining: false,
     }
+  },
+  watch: {
   },
   methods:{
     // 登录按钮
-    login(){
-        this.doLogin();
+    login(event){
+      this.$refs.loginForm.validate((valid)=> {
+        if (valid) {
+          this.logining = true;
+          let loginParams = {
+            username: this.loginForm.account,
+            password: this.loginForm.password
+          }
+          this.doLogin(loginParams).then(res => {
+            console.log('doLogin', res);
+            this.logining = false;
+            if(res){
+              this.$router.push({path: '/home'})
+            } else {
+              this.$notify({
+                          title: '登录失败',
+                          message: '用户名或密码错误，请联系管理员！',
+                          type: 'error'
+                        });
+            }
+          })
+        }
+      })
     },
     ...mapActions([
         'doLogin'
     ]),
   },
   created(){
-    let sys = getBowerInfo;
-    //sys.browser得到浏览器的类型，sys.ver得到浏览器的版本
-    this.bowerInfo = sys;
+
   },
   mounted() {
     // console.log(this.$router);
@@ -63,25 +81,26 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-.login {
-  background-color: cyan;
-}
-.main { 
-    text-align: center; /*让div内部文字居中*/
-    background-color: transparent;
-    border-radius: 20px;
-    width: 300px;
-    height: 350px;
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    color: red;
-}
+<style lang='scss' scoped>
+.login-container {
+    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin: 180px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+    .title {
+      margin: 0px auto 40px auto;
+      text-align: center;
+      color: #505458;
+    }
+    .remember {
+      margin: 0px 0px 35px 0px;
+    }
+  }
 </style>

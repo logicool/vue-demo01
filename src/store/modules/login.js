@@ -1,10 +1,10 @@
-import { request } from '@/api/request.js';
+import api from '@/api/index.js';
 import { DO_LOGIN } from '../mutation-types.js'
 const state = {
     status: '',
     email: '',
     auth_type: '',
-    token: undefined,
+    token: '',
     nick_name: '',
     avatar: '',
     introduction: '',
@@ -32,10 +32,11 @@ const mutations = {
 } 
 
 const actions = {
-    doLogin({commit}) {
-      request().post("/login").then(
+    doLogin({commit}, params) {
+      return api.api_do_login(params).then(
         data=> {
-          commit(DO_LOGIN, data)
+          commit(DO_LOGIN, data);
+          return Promise.resolve(data.success);
         }
       )
     }

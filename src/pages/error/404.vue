@@ -1,22 +1,11 @@
 <template>
-  <div class="home">
-    <h1>404 page!</h1>
-  </div>
+    <p class="page-container">404 page not found</p>
 </template>
 
-<script>
-export default {
-  name: 'page404',
-  data () {
-    return {
-    }
-  }
-}
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+    .page-container {
+        font-size: 20px;
+        text-align: center;
+        color: rgb(192, 204, 218);
+    }
 </style>

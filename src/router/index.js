@@ -18,13 +18,16 @@ const routes = [{
       //地址为空时跳转home页面
       {
           path: '',
-          redirect: '/home'
+          redirect: '/login'
       },
       //首页
       {
           path: '/home',
           name: '首页',
-          component: home
+          component: home,
+          meta: {
+            requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录才能进入的
+          },
       },
       //登录注册页
       {
@@ -37,9 +40,6 @@ const routes = [{
         path: '/test',
         name: '测试页',
         component: test,
-        meta: {
-            requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录才能进入的
-        },
       },
       // 404页
       {
@@ -72,22 +72,5 @@ const router = new VueRouter({
   }
 })
 
-// 用钩子函数beforeEach()对路由进行判断
-router.beforeEach((to, from, next) => {
-    if (to.meta.requireAuth) {  // 需要权限,进一步进行判断
-      if (store.state.login.token) {  // 通过vuex state获取当前的token是否存在
-        next();
-      }
-      else {    //如果没有权限,重定向到登录页,进行登录
-        next({
-          path: '/login',
-          // query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
-        })
-      }
-    }
-    else { //不需要权限 直接跳转
-      next();
-    }
-})
 
 export default router;
