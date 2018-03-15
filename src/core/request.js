@@ -1,10 +1,8 @@
 import axios from 'axios'
 import store from '../store'
-import router from '../router'
 import { baseUrl } from '@/config/env.js'
 import * as Logger from '@/core/logger.js'
-import Vue from 'vue'
-
+import { getToken } from '@/core/auth'
 /**
  * 网络请求设置
  * @type {{Content-Type: string}}
@@ -24,56 +22,60 @@ export let instance = axios.create({
 
 // 请求拦截
 instance.interceptors.request.use(function (config) {
-    // 在发送请求之前做些什么
-    store.commit('SET_LOADING',true);
-    // 如果有token,添加到请求报文 后台会根据该报文返回status
-    if(store.state.login.token) {
-      config.headers.Authorization = `token ${store.state.login.token}`;
+    if(store.getters.token) {
+      config.headers.Authorization = `token ${getToken()}`;
     }
 
     return config;
-
   }, function (error) {
     // 对请求错误做些什么
-    alert('网络错误,请稍后再试');
-    store.commit('SET_LOADING',false);
+    console.log(error); // for debug
     return Promise.reject(error);
   }
 );
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
-    // 对响应数据做点什么
-    // 加到时器主要是为了 展示Loading效果 项目中应去除
-    setTimeout(()=>{
-      store.commit('SET_LOADING',false);
-    },300)
-
     return response;
 
+    // // @MARK 业务相关验证
+    // const res = response.data;
+    // if (res.code !== 20000) {
+    //   Message({
+    //     message: res.message,
+    //     type: 'error',
+    //     duration: 5 * 1000
+    //   })
+
+    //   // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
+    //   if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+    //     MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+    //       confirmButtonText: '重新登录',
+    //       cancelButtonText: '取消',
+    //       type: 'warning'
+    //     }).then(() => {
+    //       store.dispatch('FedLogOut').then(() => {
+    //         location.reload()// 为了重新实例化vue-router对象 避免bug
+    //       })
+    //     })
+    //   }
+    //   return Promise.reject('error');
+    // } else {
+    //   return response;
+    // }
   }, function (error) {
-    // 对响应错误做点什么
-    store.commit('SET_LOADING',false);
-
-    if(error.response) {
-      if(error.response.status== 401) {
-          // 如果返回401 即没有权限，跳到登录页重新登录
-        // store.commit('CHANGE_TOKEN',0);
-        alert('请重新登录');
-        router.replace({
-          path: '/page404',
-          // query: {redirect: router.currentRoute.fullPath}
-        })
-
-      }
-    }
-    return Promise.reject(error);
+    console.log('err' + error)// for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
   }
 );
 
 
 /**
- *
  * @param type  'GET','POST','DELETE','PUT'
  * @param url
  * @param config
