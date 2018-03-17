@@ -106,7 +106,7 @@ export let request = () => {
       return instance.get(url, config)
         .then(response => {
           requestGroupLog('GET',url,config,{},response);
-          return response.data;
+          return response;
         })
         .catch((error) => {
           requestGroupLog('GET',url,config,{},error,true);
@@ -117,7 +117,7 @@ export let request = () => {
       return instance.post(url, data, config)
         .then(response => {
           requestGroupLog('POST',url,config,data,response);
-          return response.data
+          return response
         })
         .catch((error)=>{
           requestGroupLog('POST',url,config,data,error,true);
@@ -128,7 +128,7 @@ export let request = () => {
       return instance.delete(url, config)
         .then(response =>{
           requestGroupLog('DELETE',url,config,{},response);
-          return response.data;
+          return response;
         })
         .catch((error) => {
           requestGroupLog('DELETE',url,config,{},error,true);
@@ -139,7 +139,7 @@ export let request = () => {
       return instance.put(url, data, config)
         .then(response=>{
           requestGroupLog('PUT',url,config,data,response);
-          return response.data
+          return response
         })
         .catch((error)=>{
           requestGroupLog('PUT',url,config,data,error,true);

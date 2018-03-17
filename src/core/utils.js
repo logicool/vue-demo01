@@ -28,7 +28,7 @@ var has = Object.prototype.hasOwnProperty;
  * @param query
  * @returns {{}}
  */
-function queryString(query) {
+export function queryString(query) {
   var parser = /([^=?&]+)=?([^&]*)/g
     , result = {}
     , part;
@@ -47,7 +47,7 @@ function queryString(query) {
  * @param prefix
  * @returns {string}
  */
-function queryStringify(obj, prefix) {
+export function queryStringify(obj, prefix) {
   prefix = prefix || '';
 
   var pairs = [];
@@ -70,7 +70,7 @@ function queryStringify(obj, prefix) {
  * @param propsName
  * @returns {*}
  */
-function getPropsFromJson(data, propsName) {
+export function getPropsFromJson(data, propsName) {
   //console.log("测试data",data);
   let obj = transformToObj(data);
 
@@ -85,7 +85,7 @@ function getPropsFromJson(data, propsName) {
  * @param data
  * @returns {{}}
  */
-function transformToObj(data) {
+export function transformToObj(data) {
   let obj = {};
   if (typeof data === 'string') {
     try {
@@ -97,9 +97,61 @@ function transformToObj(data) {
   return obj
 }
 
-export default {
-  getPropsFromJson,
-  transformToObj,
-  queryStringify,
-  queryString,
+/**
+ * url参数转对象 xxx/text?a=1&b=2
+ * @param {*} url
+ * @returns {} object 
+ */
+export function param2Obj(url) {
+  const search = url.split('?')[1]
+  if (!search) {
+    return {}
+  }
+  return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+}
+
+/**
+ * 读取html的内容
+ * @param {*} val 
+ * @returns string
+ */
+export function html2Text(val) {
+  const div = document.createElement('div')
+  div.innerHTML = val
+  return div.textContent || div.innerText
+}
+
+export function objectMerge(target, source) {
+  /* Merges two  objects,
+     giving the last one precedence */
+
+  if (typeof target !== 'object') {
+    target = {}
+  }
+  if (Array.isArray(source)) {
+    return source.slice()
+  }
+  for (const property in source) {
+    if (source.hasOwnProperty(property)) {
+      const sourceProperty = source[property]
+      if (typeof sourceProperty === 'object') {
+        target[property] = objectMerge(target[property], sourceProperty)
+        continue
+      }
+      target[property] = sourceProperty
+    }
+  }
+  return target
+}
+
+export function scrollTo(element, to, duration) {
+  if (duration <= 0) return
+  const difference = to - element.scrollTop
+  const perTick = difference / duration * 10
+  setTimeout(() => {
+    console.log(new Date())
+    element.scrollTop = element.scrollTop + perTick
+    if (element.scrollTop === to) return
+    scrollTo(element, to, duration - 10)
+  }, 10)
 }

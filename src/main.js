@@ -16,6 +16,8 @@ import store from './store'
 import '@/icons' // icon
 import '@/permission' // 权限控制 router钩子
 
+import './mock' // mock数据
+
 Vue.config.productionTip = false
 
 // 连点防止

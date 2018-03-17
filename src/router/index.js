@@ -10,10 +10,22 @@ Vue.use(VueRouter)
 /* 容器 */
 import Container from '@/pages/container/Container';
 
+
 const routes = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/404', component: _import('error/404'), hidden: true },
 
+  {
+    path: '/',
+    component: Container,
+    redirect: '/home',
+    name: 'Home',
+    hidden: true,
+    children: [{
+      path: 'home',
+      component: _import('home/index')
+    }]
+  },
 ];
 
 // const routes = [{
