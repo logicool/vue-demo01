@@ -19,4 +19,4 @@
 
 # TodoList
 
-* [] 密码保存问题：现在的状态是登录后把token保存在cookie里面，后面很多权限都用到getToken()获取cookie里的token来做登录控制；那么如果在登录页面加入是否保存密码的选项，这个token就要变动到保存到store里面，然后每次登录去判断是否cookie里面存在token；另外服务端token时候超时的，如果超时，那么重新获取token的机制也要考虑一下；
+- 密码保存问题：现在的状态是登录后把token保存在cookie里面，后面很多权限都用到getToken()获取cookie里的token来做登录控制；那么如果在登录页面加入是否保存密码的选项，这个token就要变动到保存到store里面，然后每次登录去判断是否cookie里面存在token；另外服务端token时候超时的，如果超时，那么重新获取token的机制也要考虑一下；

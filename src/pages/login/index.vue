@@ -2,11 +2,11 @@
   <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px" class="loginForm login-container">
     <h3 class="title">系统登录</h3>
     <el-form-item prop="account">
-      <el-input type="text" v-model="loginForm.account" auto-complete="off" placeholder="账号"></el-input>
+      <el-input type="text" v-model="loginForm.account" autoComplete="on" placeholder="账号"></el-input>
     </el-form-item>
 
     <el-form-item prop="password">
-      <el-input :type="pwdType" v-model="loginForm.password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin"></el-input>
+      <el-input :type="pwdType"  v-model="loginForm.password" autoComplete="on"  placeholder="密码" @keyup.enter.native="handleLogin"></el-input>
       <span class="show-pwd" @click="showPwd">
         <svg-icon icon-class="eye" />
       </span>

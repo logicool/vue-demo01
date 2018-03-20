@@ -8,8 +8,8 @@ vue2 + vue-router + vuex
 # 组件
 
 > axios 网络请求
-> fastclick 连续点击
-> elementUI 饿了么UI库
+  ~~fastclick 连续点击~~
+  elementUI 饿了么UI库
 
 * 按需加载区分了生产环境和开发环境，防止hot reload时间过久；
 * 图片用了 svg-sprite-loader 的webpackage插件，用来根据导入的 svg 文件自动生成 symbol 标签并插入 html；

@@ -26,6 +26,23 @@ const routes = [
       component: _import('home/index')
     }]
   },
+
+  {
+    path: '/form',
+    component: Container,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: _import('demo/form'),
+        meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  },
+
+
+
+  { path: '*', redirect: '/404', hidden: true }
 ];
 
 // const routes = [{
