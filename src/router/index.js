@@ -10,8 +10,19 @@ Vue.use(VueRouter)
 /* 容器 */
 import Container from '@/pages/container/Container';
 
+// 后端路由的前端映射
+export const remoteRoutes = {
+  Container: Container,
+  table: _import('demo/table'),
+  demo1: _import('demo/demo1')
+}
 
-const routes = [
+export const errorRoutes = [
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+
+export const routes = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/404', component: _import('error/404'), hidden: true },
 
@@ -39,10 +50,6 @@ const routes = [
       }
     ]
   },
-
-
-
-  { path: '*', redirect: '/404', hidden: true }
 ];
 
 // const routes = [{

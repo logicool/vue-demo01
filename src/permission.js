@@ -6,6 +6,7 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 
 import { Message } from 'element-ui'
 import { getToken } from '@/core/auth'
+import { deepClone } from '@/core/utils'
 
 const whiteList = ['/login'] // 不重定向白名单
 
@@ -17,7 +18,12 @@ router.beforeEach((to, from, next) => {
         } else {
             if (store.getters.roles.length === 0) {
                 store.dispatch('GetUserInfo').then(res => { // 拉取用户信息
-                    next()
+                    const token = res.data.token
+                    store.dispatch('GenerateRoutes', token).then(() => { // 根据后端权限生成可访问的路由表
+                        router.addRoutes(deepClone(store.getters.addRouters)) // 动态添加可访问路由表 记得用深拷贝 否这会报错
+                        next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+                    })
+                    // next()
                 }).catch(() => {
                     store.dispatch('FedLogOut').then(() => {
                         Message.error('验证失败,请重新登录')

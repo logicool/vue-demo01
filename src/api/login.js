@@ -11,3 +11,7 @@ export function getUserInfo(token) {
 export function logout() {
     return request().post("/user/logout");
 }
+
+export function getUserRoutes(token) {
+    return request().get("/user/routerInfo", { params: { token } });
+}

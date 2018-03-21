@@ -10,6 +10,7 @@ import loginAPI from './login'
 Mock.mock(/\/user\/login/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/user\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
+Mock.mock(/\/user\/routerInfo\.*/, 'get', loginAPI.getUserRoutes)
 
 // 列表相关
 
