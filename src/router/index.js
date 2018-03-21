@@ -17,9 +17,9 @@ export const remoteRoutes = {
   demo1: _import('demo/demo1')
 }
 
-export const errorRoutes = [
-  { path: '*', redirect: '/404', hidden: true }
-]
+// export const errorRoutes = [
+//   { path: '*', redirect: '/404', hidden: true }
+// ]
 
 
 export const routes = [
@@ -50,6 +50,8 @@ export const routes = [
       }
     ]
   },
+
+  { path: '*', redirect: '/404', hidden: true }
 ];
 
 // const routes = [{

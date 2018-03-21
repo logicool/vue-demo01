@@ -36,7 +36,7 @@ vue2 + vue-router + vuex
 
 > 几个坑
 
->> 动态添加路由的时候 `{path: '*', redirect: '/404'}` 要最后push进去
+>> ~~动态添加路由的时候 `{path: '*', redirect: '/404'}` 要最后push进去~~
 
 >> store commit的时候要深拷贝，否则路由变化的时候不会通过mutation改变路由状态
 

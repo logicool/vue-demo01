@@ -1,4 +1,4 @@
-import { routes, errorRoutes, remoteRoutes } from '@/router/index'
+import { routes, remoteRoutes } from '@/router/index'
 import { getUserRoutes } from '@/api/login'
 import { deepClone } from '@/core/utils'
 /*
@@ -40,7 +40,7 @@ const permission = {
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = deepClone(routers);
-      state.routers = deepClone(routes.concat(routers).concat(errorRoutes));
+      state.routers = deepClone(routes.concat(routers));
     }
   },
   actions: {
