@@ -1,5 +1,5 @@
 <template>
-    <p class="page-container">table</p>
+    <p class="page-container">demo1</p>
 </template>
 
 <style scoped>

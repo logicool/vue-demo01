@@ -17,6 +17,24 @@ const userMap = {
   }
 }
 
+const routeMap = {
+  admin: [
+    {
+      path: '/table',
+      component: 'Container',  //Container,
+      children: [{
+        path: 'index',
+        component: 'table', //_import('demo/table'),
+        name: 'table',
+        meta: { title: 'Table', icon: 'table' }
+      }]
+    },
+  ],
+  editor: [
+
+  ]
+}
+
 export default {
   loginByUsername: config => {
     //   console.log('config',config, config.body);
@@ -33,5 +51,15 @@ export default {
       return false
     }
   },
-  logout: () => 'success'
+  logout: () => 'success',
+
+  getUserRoutes: config => {
+    const { token } = param2Obj(config.url);
+
+    if (routeMap[token]) {
+      return routeMap[token]
+    } else {
+      return false
+    }
+  }
 }

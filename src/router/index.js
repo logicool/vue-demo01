@@ -10,8 +10,14 @@ Vue.use(VueRouter)
 /* 容器 */
 import Container from '@/pages/container/Container';
 
+// 后端路由的前端映射
+export const remoteRoutes = {
+  Container,
+  table: _import('demo/table'),
+  demo1: _import('demo/demo1')
+}
 
-const routes = [
+export const staticRoutes = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/404', component: _import('error/404'), hidden: true },
 
@@ -26,7 +32,6 @@ const routes = [
       component: _import('home/index')
     }]
   },
-
   {
     path: '/form',
     component: Container,
@@ -40,58 +45,16 @@ const routes = [
     ]
   },
 
-
-
   { path: '*', redirect: '/404', hidden: true }
 ];
 
-// const routes = [{
-//     path: '/',
-//     component: App, //顶层路由，对应index.html
-//     children: [ //二级路由。对应App.vue
-//       //地址为空时跳转home页面
-//       {
-//           path: '',
-//           redirect: '/login'
-//       },
-//       //首页
-//       {
-//           path: '/home',
-//           name: '首页',
-//           component: home,
-//           meta: {
-//             requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录才能进入的
-//           },
-//       },
-//       //登录注册页
-//       {
-//           path: '/login',
-//           name: '登陆页',
-//           component: login
-//       },
-//       //测试页
-//       {
-//         path: '/test',
-//         name: '测试页',
-//         component: test,
-//       },
-//       // 404页
-//       {
-//           path: '/page404',
-//           name: '404页',
-//           component: page404
-//       },
-//       {
-//         path: '*', //其他页面，强制跳转到404页面 可以配合后端做路由设置，这里暂时前端控制；@MARK
-//         redirect: '/page404'
-//       }   
-//     ]
-// }];
-
+export const errorRoutes = [
+  { path: '*', redirect: '/404', hidden: true }
+]
 
 // 配置路由
 const router = new VueRouter({
-	routes,
+	staticRoutes,
 	mode: routerMode,
 	strict: process.env.NODE_ENV !== 'production',
 	scrollBehavior (to, from, savedPosition) {
