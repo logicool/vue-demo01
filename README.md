@@ -44,6 +44,16 @@ vue2 + vue-router + vuex
 
 >> 路由获取异常的时候很尴尬！！
 
+# 自动打包路由
+
+1. 约定pages页的命名规则；（如：xxxxIndex.vue）
+2. vue的script的name必须填写，并且和页面名称一致；（如下）
+   ``` 
+    export default {
+          name: 'xxxxIndex',
+        }
+   ```
+
 
 
 

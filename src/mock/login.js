@@ -36,6 +36,12 @@ const routeMap = {
           component: 'demo1', 
           name: 'demo1',
           meta: { title: 'Demo', icon: 'tree' }
+        },
+        {
+          path: 'test1Index',
+          component: 'test1Index', 
+          name: 'test1Index',
+          meta: { title: 'Test1Index', icon: 'tree' }
         }
       ]
     },

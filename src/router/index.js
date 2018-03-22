@@ -10,11 +10,20 @@ Vue.use(VueRouter)
 /* 容器 */
 import Container from '@/pages/container/Container';
 
+import routeData from './routers'
+let routeNames = {};
+
+routeData.routers.forEach((item, i) => {
+  let path = item.default.__file.match(/^src\\pages\\(.*)\.vue$/)[1].replace('\\', '\/');
+  routeNames[item.default.name] = _import(path);
+})
+
 // 后端路由的前端映射
 export const remoteRoutes = {
   Container: Container,
   table: _import('demo/table'),
-  demo1: _import('demo/demo1')
+  demo1: _import('demo/demo1'),
+  ...routeNames
 }
 
 // export const errorRoutes = [
